@@ -1,0 +1,50 @@
+{ distance: 300, restMultiplier: 2, sets: 10 }
+{ distance: 400, restMultiplier: 2.33, sets: 8 }
+{ distance: 500, restMultiplier: 2.6, sets: 6 }
+{ distance: 600, restMultiplier: 2.8, sets: 5 }
+{ distance: 700, restMultiplier: 3.2, sets: 4 }
+{ distance: 800, restMultiplier: 4, sets: 4 }
+{ distance: 1000, restMultiplier: 4.5, sets: 3 }
+
+{ distance: 300, restMultiplier: 2, sets: 8 }
+{ distance: 300, restMultiplier: 2, sets: 9 }
+{ distance: 400, restMultiplier: 2.33, sets: 6 }
+{ distance: 400, restMultiplier: 2.33, sets: 7 }
+{ distance: 500, restMultiplier: 2.6, sets: 5 }
+{ distance: 600, restMultiplier: 2.8, sets: 4 }
+{ distance: 700, restMultiplier: 3.2, sets: 3 }
+{ distance: 800, restMultiplier: 4, sets: 3 }
+{ distance: 900, restMultiplier: 4.25, sets: 3 }
+{ distance: 1100, restMultiplier: 4.5, sets: 2 }
+{ distance: 1100, restMultiplier: 4.75, sets: 2 }
+{ distance: 1200, restMultiplier: 5, sets: 2 }
+
+{distance:800, restMultiplier:4, sets:3 }
+{distance:400, restMultiplier:0, sets:1 }
+{distance:800, restMultiplier:4, sets:3 }
+{distance:500, restMultiplier:0, sets:1 }
+{distance:800, restMultiplier:4, sets:3 }
+{distance:600, restMultiplier:0, sets:1 }
+{distance:1000, restMultiplier:4.5, sets:2 }
+{distance:400, restMultiplier:0, sets:1 }
+{distance:1000, restMultiplier:4.5, sets:2 }
+{distance:500, restMultiplier:0, sets:1 }
+{distance:1000, restMultiplier:4.5, sets:2 }
+{distance:600, restMultiplier:0, sets:1 }
+{distance:1000, restMultiplier:4.5, sets:2 }
+{distance:700, restMultiplier:0, sets:1 }
+{distance:1000, restMultiplier:4.5, sets:2 }
+{distance:800, restMultiplier:0, sets:1 }
+{distance:1200, restMultiplier:5, sets:2 }
+{distance:400, restMultiplier:0, sets:1 }
+{distance:1200, restMultiplier:5, sets:2 }
+{distance:500, restMultiplier:0, sets:1 }
+{distance:1200, restMultiplier:5, sets:1 }
+{distance:800, restMultiplier:4, sets:1 }
+{distance:400, restMultiplier:0, sets:1 }
+{distance:1200, restMultiplier:5, sets:1 }
+{distance:800, restMultiplier:4, sets:1 }
+{distance:600, restMultiplier:0, sets:1 }
+{distance:400, restMultiplier:2, sets:1 }
+{distance:800, restMultiplier:4, sets:2 }
+{distance:400, restMultiplier:0, sets:1 }
