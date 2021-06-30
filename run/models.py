@@ -53,10 +53,16 @@ class Questionnaire(models.Model):
 
 
 class Workout(models.Model):
-    workout = JSONField(blank=True, null=True)
+    workoutInfo = models.JSONField(blank=True, null=True)
+    id = models.CharField(primary_key=True, max_length=50, blank=True)
+    type = models.CharField(blank=True, max_length=50)
+    variation = models.CharField(blank=True, max_length=50)
+    alpha = models.FloatField(null=True)
+    week = models.IntegerField(null=True)
+    difficultyMultiplier = models.FloatField(null=True)
 
     def __str__(self):
-        return f"{self.workout}"
+        return f"{self.workoutInfo}"
 
 
 class Profile(models.Model):

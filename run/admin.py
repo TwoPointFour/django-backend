@@ -21,6 +21,11 @@ class WorkoutLogCommentInline(admin.TabularInline):
     model = Comment
 
 
+class WorkoutAdmin(admin.ModelAdmin):
+    list_display = ("id", "type", "variation",
+                    "difficultyMultiplier", "workoutInfo")
+
+
 # class QuestionnaireProfileInline(admin.TabularInline):
 #     model = Profile
 
@@ -45,7 +50,7 @@ class CommunityAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Questionnaire, QuestionnaireAdmin)
-admin.site.register(Workout)
+admin.site.register(Workout, WorkoutAdmin)
 admin.site.register(Comment)
 admin.site.register(ShopItem)
 admin.site.register(Profile, ProfileAdmin)

@@ -69,6 +69,8 @@ class QuestionnaireSerializer(serializers.ModelSerializer):
 
 
 class CommunitySerializer(serializers.ModelSerializer):
+    # profiles = ProfileSerializer() call a object in the class
+
     class Meta:
         model = Community
         fields = "__all__"
