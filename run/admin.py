@@ -22,8 +22,7 @@ class WorkoutLogCommentInline(admin.TabularInline):
 
 
 class WorkoutAdmin(admin.ModelAdmin):
-    list_display = ("id", "type", "variation",
-                    "difficultyMultiplier", "workoutInfo")
+    list_display = ("id", "alpha", "difficultyMultiplier", "workoutInfo")
 
 
 # class QuestionnaireProfileInline(admin.TabularInline):

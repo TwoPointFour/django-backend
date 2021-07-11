@@ -15,6 +15,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated, BasePermission
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from .suggest import get_training_plan
 
 # Create your views here.
 
@@ -214,6 +215,14 @@ class CustomAuthToken(ObtainAuthToken):
             'user_id': user.pk,
             'email': user.email
         })
+
+class Suggest(generics.RetrieveAPIView):
+    def get(self, request, **kwargs):
+        var = get_training_plan()
+        return Response({
+            "Training Plan": var
+        })
+
 
 
 # # @csrf_exempt
