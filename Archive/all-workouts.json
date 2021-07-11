@@ -1,0 +1,1422 @@
+[
+	{
+		"alpha": 0.4,
+		"workoutInfo": [
+			{
+				"jogByTime": 75,
+				"jogPace": [
+					"0.75"
+				],
+				"sprintDistance": 200,
+				"sprintPace": [
+					"goalPace"
+				],
+				"sprintSets": 10,
+				"weekAt": "1"
+			}
+		],
+		"id": "fartlek-1"
+	},
+	{
+		"alpha": 0.4,
+		"workoutInfo": [
+			{
+				"jogByTime": 70,
+				"jogPace": [
+					"0.7"
+				],
+				"sprintDistance": 200,
+				"sprintPace": [
+					"goalPace"
+				],
+				"sprintSets": 10,
+				"weekAt": "2"
+			}
+		],
+		"id": "fartlek-2"
+	},
+	{
+		"alpha": 0.4,
+		"workoutInfo": [
+			{
+				"jogByTime": 65,
+				"jogPace": [
+					"0.65"
+				],
+				"sprintDistance": 200,
+				"sprintPace": [
+					"goalPace"
+				],
+				"sprintSets": 10,
+				"weekAt": "3"
+			}
+		],
+		"id": "fartlek-3"
+	},
+	{
+		"alpha": 0.4,
+		"workoutInfo": [
+			{
+				"jogByTime": 60,
+				"jogPace": [
+					"0.6"
+				],
+				"sprintDistance": 200,
+				"sprintPace": [
+					"goalPace"
+				],
+				"sprintSets": 10,
+				"weekAt": "4"
+			}
+		],
+		"id": "fartlek-4"
+	},
+	{
+		"alpha": 0.4,
+		"workoutInfo": [
+			{
+				"jogByTime": 60,
+				"jogPace": [
+					"0.6"
+				],
+				"sprintDistance": 200,
+				"sprintPace": [
+					"goalPace"
+				],
+				"sprintSets": 11,
+				"weekAt": "5"
+			}
+		],
+		"id": "fartlek-5"
+	},
+	{
+		"alpha": 0.4,
+		"workoutInfo": [
+			{
+				"jogByTime": 60,
+				"jogPace": [
+					"0.6"
+				],
+				"sprintDistance": 200,
+				"sprintPace": [
+					"goalPace"
+				],
+				"sprintSets": 12,
+				"weekAt": "6"
+			}
+		],
+		"id": "fartlek-6"
+	},
+	{
+		"alpha": 0.4,
+		"workoutInfo": [
+			{
+				"end": true,
+				"jogByTime": 60,
+				"jogPace": [
+					"0.6"
+				],
+				"sprintDistance": 200,
+				"sprintPace": [
+					"goalPace"
+				],
+				"sprintSets": 13,
+				"weekAt": "7"
+			}
+		],
+		"id": "fartlek-7"
+	},
+	{
+		"alpha": 0.6,
+		"workoutInfo": [
+			{
+				"jogByTime": 60,
+				"jogPace": [
+					"0.6"
+				],
+				"sprintDistance": 200,
+				"sprintPace": [
+					"goalPace"
+				],
+				"sprintSets": 10,
+				"weekAt": "1"
+			}
+		],
+		"id": "fartlek-8"
+	},
+	{
+		"alpha": 0.6,
+		"workoutInfo": [
+			{
+				"jogByTime": 60,
+				"jogPace": [
+					"0.6"
+				],
+				"sprintDistance": 200,
+				"sprintPace": [
+					"goalPace"
+				],
+				"sprintSets": 11,
+				"weekAt": "2"
+			}
+		],
+		"id": "fartlek-9"
+	},
+	{
+		"alpha": 0.6,
+		"workoutInfo": [
+			{
+				"jogByTime": 60,
+				"jogPace": [
+					"0.6"
+				],
+				"sprintDistance": 200,
+				"sprintPace": [
+					"goalPace"
+				],
+				"sprintSets": 12,
+				"weekAt": "3"
+			}
+		],
+		"id": "fartlek-10"
+	},
+	{
+		"alpha": 0.6,
+		"workoutInfo": [
+			{
+				"jogByTime": 60,
+				"jogPace": [
+					"0.6"
+				],
+				"sprintDistance": 200,
+				"sprintPace": [
+					"goalPace"
+				],
+				"sprintSets": 13,
+				"weekAt": "4"
+			}
+		],
+		"id": "fartlek-11"
+	},
+	{
+		"alpha": 0.6,
+		"workoutInfo": [
+			{
+				"jogByTime": 60,
+				"jogPace": [
+					"0.6"
+				],
+				"sprintDistance": 300,
+				"sprintPace": [
+					"goalPace"
+				],
+				"sprintSets": 8,
+				"weekAt": "5"
+			}
+		],
+		"id": "fartlek-12"
+	},
+	{
+		"alpha": 0.6,
+		"workoutInfo": [
+			{
+				"jogByTime": 60,
+				"jogPace": [
+					"0.6"
+				],
+				"sprintDistance": 300,
+				"sprintPace": [
+					"goalPace"
+				],
+				"sprintSets": 9,
+				"weekAt": "6"
+			}
+		],
+		"id": "fartlek-13"
+	},
+	{
+		"alpha": 0.6,
+		"workoutInfo": [
+			{
+				"end": true,
+				"jogByTime": 60,
+				"jogPace": [
+					"0.6"
+				],
+				"sprintDistance": 300,
+				"sprintPace": [
+					"goalPace"
+				],
+				"sprintSets": 10,
+				"weekAt": "7"
+			}
+		],
+		"id": "fartlek-14"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"jogByTime": 60,
+				"jogPace": [
+					"0.6"
+				],
+				"sprintDistance": 300,
+				"sprintPace": [
+					"goalPace",
+					"0.01"
+				],
+				"sprintSets": 8,
+				"weekAt": "1"
+			}
+		],
+		"id": "fartlek-15"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"jogByTime": 60,
+				"jogPace": [
+					"0.6"
+				],
+				"sprintDistance": 300,
+				"sprintPace": [
+					"goalPace",
+					"0.01"
+				],
+				"sprintSets": 9,
+				"weekAt": "2"
+			}
+		],
+		"id": "fartlek-16"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"jogByTime": 60,
+				"jogPace": [
+					"0.6"
+				],
+				"sprintDistance": 300,
+				"sprintPace": [
+					"goalPace",
+					"0.01"
+				],
+				"sprintSets": 10,
+				"weekAt": "3"
+			}
+		],
+		"id": "fartlek-17"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"jogByTime": 80,
+				"jogPace": [
+					"0.4"
+				],
+				"sprintDistance": 300,
+				"sprintPace": [
+					"goalPace",
+					"0.01"
+				],
+				"sprintSets": 10,
+				"weekAt": "4"
+			}
+		],
+		"id": "fartlek-18"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"jogByTime": 75,
+				"jogPace": [
+					"0.375"
+				],
+				"sprintDistance": 300,
+				"sprintPace": [
+					"goalPace",
+					"0.01"
+				],
+				"sprintSets": 10,
+				"weekAt": "5"
+			}
+		],
+		"id": "fartlek-19"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"jogByTime": 70,
+				"jogPace": [
+					"0.35"
+				],
+				"sprintDistance": 300,
+				"sprintPace": [
+					"goalPace",
+					"0.01"
+				],
+				"sprintSets": 10,
+				"weekAt": "6"
+			}
+		],
+		"id": "fartlek-20"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"jogByTime": 65,
+				"jogPace": [
+					"0.325"
+				],
+				"sprintDistance": 300,
+				"sprintPace": [
+					"goalPace",
+					"0.01"
+				],
+				"sprintSets": 10,
+				"weekAt": "7"
+			}
+		],
+		"id": "fartlek-21"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"end": true,
+				"jogByTime": 60,
+				"jogPace": [
+					"0.3"
+				],
+				"sprintDistance": 300,
+				"sprintPace": [
+					"goalPace",
+					"0.01"
+				],
+				"sprintSets": 10,
+				"weekAt": "8"
+			}
+		],
+		"id": "fartlek-22"
+	},
+	{
+		"alpha": 1,
+		"workoutInfo": [
+			{
+				"jogByDistance": 200,
+				"jogPace": [
+					"tempoPace",
+					"0.025"
+				],
+				"sprintDistance": 300,
+				"sprintPace": [
+					"goalPace",
+					"0.01"
+				],
+				"sprintSets": 10,
+				"weekAt": "1"
+			}
+		],
+		"id": "fartlek-23"
+	},
+	{
+		"alpha": 1,
+		"workoutInfo": [
+			{
+				"jogByDistance": 200,
+				"jogPace": [
+					"tempoPace",
+					"0.025"
+				],
+				"sprintDistance": 300,
+				"sprintPace": [
+					"goalPace",
+					"0.01"
+				],
+				"sprintSets": 10,
+				"weekAt": "2"
+			}
+		],
+		"id": "fartlek-24"
+	},
+	{
+		"alpha": 1,
+		"workoutInfo": [
+			{
+				"jogByDistance": 200,
+				"jogPace": [
+					"tempoPace",
+					"0.025"
+				],
+				"sprintDistance": 300,
+				"sprintPace": [
+					"goalPace",
+					"0.01"
+				],
+				"sprintSets": 10,
+				"weekAt": "3"
+			}
+		],
+		"id": "fartlek-25"
+	},
+	{
+		"alpha": 1,
+		"workoutInfo": [
+			{
+				"jogByDistance": 200,
+				"jogPace": [
+					"tempoPace",
+					"0.025"
+				],
+				"sprintDistance": 300,
+				"sprintPace": [
+					"goalPace",
+					"0.01"
+				],
+				"sprintSets": 10,
+				"weekAt": "4"
+			}
+		],
+		"id": "fartlek-26"
+	},
+	{
+		"alpha": 1,
+		"workoutInfo": [
+			{
+				"jogByDistance": 200,
+				"jogPace": [
+					"tempoPace",
+					"0.025"
+				],
+				"sprintDistance": 400,
+				"sprintPace": [
+					"goalPace",
+					"0.01"
+				],
+				"sprintSets": 8,
+				"weekAt": "5"
+			}
+		],
+		"id": "fartlek-27"
+	},
+	{
+		"alpha": 1,
+		"workoutInfo": [
+			{
+				"jogByDistance": 200,
+				"jogPace": [
+					"tempoPace",
+					"0.025"
+				],
+				"sprintDistance": 400,
+				"sprintPace": [
+					"goalPace",
+					"0.0075"
+				],
+				"sprintSets": 8,
+				"weekAt": "6"
+			}
+		],
+		"id": "fartlek-28"
+	},
+	{
+		"alpha": 1,
+		"workoutInfo": [
+			{
+				"end": true,
+				"jogByDistance": 200,
+				"jogPace": [
+					"tempoPace",
+					"0.025"
+				],
+				"sprintDistance": 400,
+				"sprintPace": [
+					"goalPace",
+					"0.005"
+				],
+				"sprintSets": 8,
+				"weekAt": "7"
+			}
+		],
+		"id": "fartlek-29"
+	},
+	{
+		"alpha": 0.2,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 20,
+				"weekAt": "1"
+			}
+		],
+		"id": "long_distance-1"
+	},
+	{
+		"alpha": 0.2,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 23,
+				"weekAt": "2"
+			}
+		],
+		"id": "long_distance-2"
+	},
+	{
+		"alpha": 0.2,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 26,
+				"weekAt": "3"
+			}
+		],
+		"id": "long_distance-3"
+	},
+	{
+		"alpha": 0.2,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 29,
+				"weekAt": "4"
+			}
+		],
+		"id": "long_distance-4"
+	},
+	{
+		"alpha": 0.2,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 32,
+				"weekAt": "5"
+			}
+		],
+		"id": "long_distance-5"
+	},
+	{
+		"alpha": 0.2,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 35,
+				"weekAt": "6"
+			}
+		],
+		"id": "long_distance-6"
+	},
+	{
+		"alpha": 0.2,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 38,
+				"weekAt": "7"
+			}
+		],
+		"id": "long_distance-7"
+	},
+	{
+		"alpha": 0.2,
+		"workoutInfo": [
+			{
+				"end": true,
+				"runTime": 40,
+				"weekAt": "8"
+			}
+		],
+		"id": "long_distance-8"
+	},
+	{
+		"alpha": 0.4,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 25,
+				"weekAt": "1"
+			}
+		],
+		"id": "long_distance-9"
+	},
+	{
+		"alpha": 0.4,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 28,
+				"weekAt": "2"
+			}
+		],
+		"id": "long_distance-10"
+	},
+	{
+		"alpha": 0.4,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 31,
+				"weekAt": "3"
+			}
+		],
+		"id": "long_distance-11"
+	},
+	{
+		"alpha": 0.4,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 34,
+				"weekAt": "4"
+			}
+		],
+		"id": "long_distance-12"
+	},
+	{
+		"alpha": 0.4,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 37,
+				"weekAt": "5"
+			}
+		],
+		"id": "long_distance-13"
+	},
+	{
+		"alpha": 0.4,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 40,
+				"weekAt": "6"
+			}
+		],
+		"id": "long_distance-14"
+	},
+	{
+		"alpha": 0.4,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 43,
+				"weekAt": "7"
+			}
+		],
+		"id": "long_distance-15"
+	},
+	{
+		"alpha": 0.4,
+		"workoutInfo": [
+			{
+				"end": true,
+				"runTime": 46,
+				"weekAt": "8"
+			}
+		],
+		"id": "long_distance-16"
+	},
+	{
+		"alpha": 0.6,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 30,
+				"weekAt": "1"
+			}
+		],
+		"id": "long_distance-17"
+	},
+	{
+		"alpha": 0.6,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 32.5,
+				"weekAt": "2"
+			}
+		],
+		"id": "long_distance-18"
+	},
+	{
+		"alpha": 0.6,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 35,
+				"weekAt": "3"
+			}
+		],
+		"id": "long_distance-19"
+	},
+	{
+		"alpha": 0.6,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 37.5,
+				"weekAt": "4"
+			}
+		],
+		"id": "long_distance-20"
+	},
+	{
+		"alpha": 0.6,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 40,
+				"weekAt": "5"
+			}
+		],
+		"id": "long_distance-21"
+	},
+	{
+		"alpha": 0.6,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 42.5,
+				"weekAt": "6"
+			}
+		],
+		"id": "long_distance-22"
+	},
+	{
+		"alpha": 0.6,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 45,
+				"weekAt": "7"
+			}
+		],
+		"id": "long_distance-23"
+	},
+	{
+		"alpha": 0.6,
+		"workoutInfo": [
+			{
+				"end": true,
+				"runTime": 47.5,
+				"weekAt": "8"
+			}
+		],
+		"id": "long_distance-24"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 36,
+				"weekAt": "1"
+			}
+		],
+		"id": "long_distance-25"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 38,
+				"weekAt": "2"
+			}
+		],
+		"id": "long_distance-26"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 40,
+				"weekAt": "3"
+			}
+		],
+		"id": "long_distance-27"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 42,
+				"weekAt": "4"
+			}
+		],
+		"id": "long_distance-28"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 44,
+				"weekAt": "5"
+			}
+		],
+		"id": "long_distance-29"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 46,
+				"weekAt": "6"
+			}
+		],
+		"id": "long_distance-30"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 48,
+				"weekAt": "7"
+			}
+		],
+		"id": "long_distance-31"
+	},
+	{
+		"alpha": 0.8,
+		"workoutInfo": [
+			{
+				"end": true,
+				"runTime": 50,
+				"weekAt": "8"
+			}
+		],
+		"id": "long_distance-32"
+	},
+	{
+		"alpha": 1,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 40,
+				"weekAt": "1"
+			}
+		],
+		"id": "long_distance-33"
+	},
+	{
+		"alpha": 1,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 42,
+				"weekAt": "2"
+			}
+		],
+		"id": "long_distance-34"
+	},
+	{
+		"alpha": 1,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 44,
+				"weekAt": "3"
+			}
+		],
+		"id": "long_distance-35"
+	},
+	{
+		"alpha": 1,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 46,
+				"weekAt": "4"
+			}
+		],
+		"id": "long_distance-36"
+	},
+	{
+		"alpha": 1,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 48,
+				"weekAt": "5"
+			}
+		],
+		"id": "long_distance-37"
+	},
+	{
+		"alpha": 1,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 50,
+				"weekAt": "6"
+			}
+		],
+		"id": "long_distance-38"
+	},
+	{
+		"alpha": 1,
+		"workoutInfo": [
+			{
+				"end": false,
+				"runTime": 52,
+				"weekAt": "7"
+			}
+		],
+		"id": "long_distance-39"
+	},
+	{
+		"alpha": 1,
+		"workoutInfo": [
+			{
+				"end": true,
+				"runTime": 54,
+				"weekAt": "8"
+			}
+		],
+		"id": "long_distance-40"
+	},
+	{
+		"difficultyMultiplier": 66.8,
+		"workoutInfo": [
+			{
+				"distance": 300,
+				"restMultiplier": 2,
+				"sets": 10
+			}
+		],
+		"id": "primary-1"
+	},
+	{
+		"difficultyMultiplier": 73.1,
+		"workoutInfo": [
+			{
+				"distance": 400,
+				"restMultiplier": 2.33,
+				"sets": 8
+			}
+		],
+		"id": "primary-2"
+	},
+	{
+		"difficultyMultiplier": 76.7,
+		"workoutInfo": [
+			{
+				"distance": 500,
+				"restMultiplier": 2.6,
+				"sets": 6
+			}
+		],
+		"id": "primary-3"
+	},
+	{
+		"difficultyMultiplier": 79.1,
+		"workoutInfo": [
+			{
+				"distance": 600,
+				"restMultiplier": 2.8,
+				"sets": 5
+			}
+		],
+		"id": "primary-4"
+	},
+	{
+		"difficultyMultiplier": 81.8,
+		"workoutInfo": [
+			{
+				"distance": 700,
+				"restMultiplier": 3.2,
+				"sets": 4
+			}
+		],
+		"id": "primary-5"
+	},
+	{
+		"difficultyMultiplier": 88.1,
+		"workoutInfo": [
+			{
+				"distance": 800,
+				"restMultiplier": 4,
+				"sets": 4
+			}
+		],
+		"id": "primary-6"
+	},
+	{
+		"difficultyMultiplier": 91,
+		"workoutInfo": [
+			{
+				"distance": 1000,
+				"restMultiplier": 4.5,
+				"sets": 3
+			}
+		],
+		"id": "primary-7"
+	},
+	{
+		"difficultyMultiplier": 85.3,
+		"workoutInfo": [
+			{
+				"distance": 800,
+				"restMultiplier": 4,
+				"sets": 3
+			},
+			{
+				"distance": 400,
+				"restMultiplier": 0,
+				"sets": 1
+			}
+		],
+		"id": "pyramid-1"
+	},
+	{
+		"difficultyMultiplier": 85.9,
+		"workoutInfo": [
+			{
+				"distance": 800,
+				"restMultiplier": 4,
+				"sets": 3
+			},
+			{
+				"distance": 500,
+				"restMultiplier": 0,
+				"sets": 1
+			}
+		],
+		"id": "pyramid-2"
+	},
+	{
+		"difficultyMultiplier": 86.5,
+		"workoutInfo": [
+			{
+				"distance": 800,
+				"restMultiplier": 4,
+				"sets": 3
+			},
+			{
+				"distance": 600,
+				"restMultiplier": 0,
+				"sets": 1
+			}
+		],
+		"id": "pyramid-3"
+	},
+	{
+		"difficultyMultiplier": 84.9,
+		"workoutInfo": [
+			{
+				"distance": 1000,
+				"restMultiplier": 4.5,
+				"sets": 2
+			},
+			{
+				"distance": 400,
+				"restMultiplier": 0,
+				"sets": 1
+			}
+		],
+		"id": "pyramid-4"
+	},
+	{
+		"difficultyMultiplier": 85.5,
+		"workoutInfo": [
+			{
+				"distance": 1000,
+				"restMultiplier": 4.5,
+				"sets": 2
+			},
+			{
+				"distance": 500,
+				"restMultiplier": 0,
+				"sets": 1
+			}
+		],
+		"id": "pyramid-5"
+	},
+	{
+		"difficultyMultiplier": 86.1,
+		"workoutInfo": [
+			{
+				"distance": 1000,
+				"restMultiplier": 4.5,
+				"sets": 2
+			},
+			{
+				"distance": 600,
+				"restMultiplier": 0,
+				"sets": 1
+			}
+		],
+		"id": "pyramid-6"
+	},
+	{
+		"difficultyMultiplier": 86.8,
+		"workoutInfo": [
+			{
+				"distance": 1000,
+				"restMultiplier": 4.5,
+				"sets": 2
+			},
+			{
+				"distance": 700,
+				"restMultiplier": 0,
+				"sets": 1
+			}
+		],
+		"id": "pyramid-7"
+	},
+	{
+		"difficultyMultiplier": 87.5,
+		"workoutInfo": [
+			{
+				"distance": 1000,
+				"restMultiplier": 4.5,
+				"sets": 2
+			},
+			{
+				"distance": 800,
+				"restMultiplier": 0,
+				"sets": 1
+			}
+		],
+		"id": "pyramid-8"
+	},
+	{
+		"difficultyMultiplier": 91.9,
+		"workoutInfo": [
+			{
+				"distance": 1200,
+				"restMultiplier": 5,
+				"sets": 2
+			},
+			{
+				"distance": 400,
+				"restMultiplier": 0,
+				"sets": 1
+			}
+		],
+		"id": "pyramid-9"
+	},
+	{
+		"difficultyMultiplier": 92.7,
+		"workoutInfo": [
+			{
+				"distance": 1200,
+				"restMultiplier": 5,
+				"sets": 2
+			},
+			{
+				"distance": 500,
+				"restMultiplier": 0,
+				"sets": 1
+			}
+		],
+		"id": "pyramid-10"
+	},
+	{
+		"difficultyMultiplier": 87.4,
+		"workoutInfo": [
+			{
+				"distance": 1200,
+				"restMultiplier": 5,
+				"sets": 1
+			},
+			{
+				"distance": 800,
+				"restMultiplier": 4,
+				"sets": 1
+			},
+			{
+				"distance": 400,
+				"restMultiplier": 0,
+				"sets": 1
+			}
+		],
+		"id": "pyramid-11"
+	},
+	{
+		"difficultyMultiplier": 88.5,
+		"workoutInfo": [
+			{
+				"distance": 1200,
+				"restMultiplier": 5,
+				"sets": 1
+			},
+			{
+				"distance": 800,
+				"restMultiplier": 4,
+				"sets": 1
+			},
+			{
+				"distance": 600,
+				"restMultiplier": 0,
+				"sets": 1
+			}
+		],
+		"id": "pyramid-12"
+	},
+	{
+		"difficultyMultiplier": 81.1,
+		"workoutInfo": [
+			{
+				"distance": 400,
+				"restMultiplier": 2,
+				"sets": 1
+			},
+			{
+				"distance": 800,
+				"restMultiplier": 4,
+				"sets": 2
+			},
+			{
+				"distance": 400,
+				"restMultiplier": 0,
+				"sets": 1
+			}
+		],
+		"id": "pyramid-13"
+	},
+	{
+		"difficultyMultiplier": 55.4,
+		"workoutInfo": [
+			{
+				"distance": 300,
+				"restMultiplier": 2,
+				"sets": 8
+			}
+		],
+		"id": "secondary-1"
+	},
+	{
+		"difficultyMultiplier": 61.5,
+		"workoutInfo": [
+			{
+				"distance": 300,
+				"restMultiplier": 2,
+				"sets": 9
+			}
+		],
+		"id": "secondary-2"
+	},
+	{
+		"difficultyMultiplier": 64.7,
+		"workoutInfo": [
+			{
+				"distance": 400,
+				"restMultiplier": 2.33,
+				"sets": 6
+			}
+		],
+		"id": "secondary-3"
+	},
+	{
+		"difficultyMultiplier": 69,
+		"workoutInfo": [
+			{
+				"distance": 400,
+				"restMultiplier": 2.33,
+				"sets": 7
+			}
+		],
+		"id": "secondary-4"
+	},
+	{
+		"difficultyMultiplier": 72.7,
+		"workoutInfo": [
+			{
+				"distance": 500,
+				"restMultiplier": 2.6,
+				"sets": 5
+			}
+		],
+		"id": "secondary-5"
+	},
+	{
+		"difficultyMultiplier": 74.9,
+		"workoutInfo": [
+			{
+				"distance": 600,
+				"restMultiplier": 2.8,
+				"sets": 4
+			}
+		],
+		"id": "secondary-6"
+	},
+	{
+		"difficultyMultiplier": 76.7,
+		"workoutInfo": [
+			{
+				"distance": 700,
+				"restMultiplier": 3.2,
+				"sets": 3
+			}
+		],
+		"id": "secondary-7"
+	},
+	{
+		"difficultyMultiplier": 81.9,
+		"workoutInfo": [
+			{
+				"distance": 800,
+				"restMultiplier": 4,
+				"sets": 3
+			}
+		],
+		"id": "secondary-8"
+	},
+	{
+		"difficultyMultiplier": 86,
+		"workoutInfo": [
+			{
+				"distance": 900,
+				"restMultiplier": 4.25,
+				"sets": 3
+			}
+		],
+		"id": "secondary-9"
+	},
+	{
+		"difficultyMultiplier": 81.3,
+		"workoutInfo": [
+			{
+				"distance": 1100,
+				"restMultiplier": 4.5,
+				"sets": 2
+			}
+		],
+		"id": "secondary-10"
+	},
+	{
+		"difficultyMultiplier": 83.7,
+		"workoutInfo": [
+			{
+				"distance": 1100,
+				"restMultiplier": 4.75,
+				"sets": 2
+			}
+		],
+		"id": "secondary-11"
+	},
+	{
+		"difficultyMultiplier": 86,
+		"workoutInfo": [
+			{
+				"distance": 1200,
+				"restMultiplier": 5,
+				"sets": 2
+			}
+		],
+		"id": "secondary-12"
+	}
+]

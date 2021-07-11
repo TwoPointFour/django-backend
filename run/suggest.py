@@ -2,7 +2,7 @@ import math
 from functools import reduce
 from operator import itemgetter
 from statistics import pstdev
-
+from time import time
 from .models import Workout
 
 # All constants below TBC
@@ -28,7 +28,7 @@ def getPrescribedRest(restMultiple, targetPace):
 def restRatio(restMultiple, targetPace):
     return getPrescribedRest(restMultiple, targetPace) / (restMultiple * targetPace * 100)
 def restMultiplier(workout, targetPace):
-    return 1 / math.exp(0.0024 * restRatio(workout['parts'][0]["restMultiplier"], targetPace))
+    return 1 / math.exp(0.0024 * restRatio(workout['workoutInfo'][0]["restMultiplier"], targetPace))
 def convertToSeconds(input):
     split_array = input.split(":")
     return int(split_array[0]) * 60 + int(split_array[1])
@@ -39,17 +39,19 @@ def getPaces(targetPace, cNewbieGains):
 def getVelocities(paces):
     return [(1 / pace) * 3.6 for pace in paces]
 def getGoalSetTime(previousWorkout): # in ms
-  return (float(previousWorkout['parts'][0]["pace"]) * float(previousWorkout['parts'][0]["distance"])) / 100
+  return (float(previousWorkout['workoutInfo'][0]["pace"]) * float(previousWorkout['workoutInfo'][0]["distance"])) / 100
 def getAverageTime(previousWorkout): #in seconds
-  timings = previousWorkout['parts'][0]["timings"]
+  timings = previousWorkout['workoutInfo'][0]["timings"]
   return (math.fsum(timings) / len(timings))
 def getStandardDeviation(previousWorkout):
-    return pstdev(previousWorkout['parts'][0]["timings"])
-# todo get rid of the retarded parseFloat all over the place
+    return pstdev(previousWorkout['workoutInfo'][0]["timings"])
+# todo get rid of the retarded float all over the place
 def getMissed(previousWorkout):
-    return previousWorkout['parts'][0]["sets"] - len(previousWorkout['parts'][0]["timings"])
+    return previousWorkout['workoutInfo'][0]["sets"] - len(previousWorkout['workoutInfo'][0]["timings"])
 def penaliseMissed(missed, previousWorkout):
-    return (math.exp(missed / float(previousWorkout['parts'][0]["sets"])) - 1) * yValue
+    return (math.exp(missed / float(previousWorkout['workoutInfo'][0]["sets"])) - 1) * yValue
+def getRoundedDistance(time, tempoPace):
+    return math.ceil((time * 60 / tempoPace) / 0.5) * 0.5
 
 def getUserInfo(questionnaireData, previousFitness):
   duration, workoutFrequency = itemgetter('duration', 'workoutFrequency')(questionnaireData)
@@ -129,7 +131,7 @@ def getSpeedDifficulty(currentVelocity, targetVelocity, velocities):
     return 0
 
 def getWorkoutScore(previousWorkout):
-  if not len(previousWorkout['parts'][0]["timings"]):
+  if not len(previousWorkout['workoutInfo'][0]["timings"]):
     return {'goalTimePerSet': 0, 'averageTime': 0, 'standardDeviation': 0, 'missed': 0, 'workoutScore': 0}
   goalTimePerSet = getGoalSetTime(previousWorkout) # in ms
   averageTime = getAverageTime(previousWorkout) # in ms
@@ -156,6 +158,16 @@ def getOverallFitness(speedDifficulty, duration, currentFitness, previousWorkout
 def getBestTrainingPlan(trainingPlanPrimary, trainingPlanSecondary):
   return trainingPlanPrimary[0] > trainingPlanSecondary[0] and trainingPlanPrimary[0] - trainingPlanSecondary[0] < 3 and trainingPlanPrimary[1]["personalisedDifficultyMultiplier"] < trainingPlanSecondary[1]["personalisedDifficultyMultiplier"]
 
+def getIntervalTrainingPlan(targetPace, cNewbieGains, userInfo, previousWorkout, displayPace):
+  velocities = getVelocities(getPaces(targetPace, cNewbieGains))
+   # velocities in km/hr, paces in s/m
+  speedDifficulty = getSpeedDifficulty(convertToVelocity(userInfo.currentTime), convertToVelocity(userInfo.targetTime), velocities) # getSpeedDifficulty(currentVelocity, paces);
+  trainingPlanPrimary, trainingPlanSecondary, newFitness = itemgetter('trainingPlanPrimary', 'trainingPlanSecondary', 'newFitness')(generateTrainingPlans(speedDifficulty, targetPace, userInfo, previousWorkout))
+  trainingPlan = trainingPlanSecondary[1] if getBestTrainingPlan(trainingPlanPrimary, trainingPlanSecondary) else trainingPlanPrimary[1]
+  trainingPlan['workoutInfo'][0]["rest"] = getPrescribedRest(trainingPlan['workoutInfo'][0]["restMultiplier"], targetPace)
+  trainingPlan['workoutInfo'][0]["pace"] = displayPace
+  return {'newFitness': newFitness, 'trainingPlan': trainingPlan}
+
 def generateTrainingPlans(speedDifficulty, targetPace, userInfo, previousWorkout):
   newFitness, targetDifficulty = itemgetter('newFitness', 'targetDifficulty')(getOverallFitness(
     speedDifficulty,
@@ -163,25 +175,148 @@ def generateTrainingPlans(speedDifficulty, targetPace, userInfo, previousWorkout
     userInfo['currentFitness'],
     previousWorkout,
   ))
-  # xyz = Workout.objects.get(id__contains='fartlek')
-  # const mapper = (workout) => {
-  #   const temp = JSON.parse(JSON.stringify(workout))
-  #   temp.personalisedDifficultyMultiplier =
-  #     (speedDifficulty / 100) * workout.difficultyMultiplier * restMultiplier(workout, targetPace) # * 100
-  #   return temp
-  # }
-  # const reducer = (variance, workout) => {
-  #   const workoutVariance = Math.abs(workout.personalisedDifficultyMultiplier - targetDifficulty)
-  #   if (workoutVariance > variance[0]) {
-  #     return variance
-  #   }
-  #   return [workoutVariance, workout] #return [workoutVariance, ...workout]
-  # }
-  # const primaryIntervalsCopy = primary.map(mapper)
-  # const secondaryIntervalsCopy = secondary.map(mapper)
-  # const trainingPlanPrimary = primaryIntervalsCopy.reduce(reducer, [10000])
-  # const trainingPlanSecondary = secondaryIntervalsCopy.reduce(reducer, [trainingPlanPrimary[1]])
-  # return {trainingPlanPrimary, trainingPlanSecondary, newFitness}
+  def getPersonalisedDifficulty(workout):
+    workout['personalisedDifficultyMultiplier'] = (speedDifficulty / 100) * workout['difficultyMultiplier'] * restMultiplier(workout, targetPace)
+    return workout
+  primary = map(getPersonalisedDifficulty, list(Workout.objects.filter(id__contains='primary').values()))
+  secondary = map(getPersonalisedDifficulty, list(Workout.objects.filter(id__contains='secondary').values()))
+  def getClosestWorkout(workoutOne, workoutTwo):
+    workoutVariance = abs(workoutTwo['personalisedDifficultyMultiplier'] - targetDifficulty)
+    if workoutVariance > workoutOne[0]:
+      return workoutOne
+    return [workoutVariance, workoutTwo]
+  trainingPlanPrimary = reduce(getClosestWorkout, primary, [10000])
+  trainingPlanSecondary = reduce(getClosestWorkout, secondary, [10000])
+  return {'trainingPlanPrimary': trainingPlanPrimary, 'trainingPlanSecondary': trainingPlanSecondary, 'newFitness': newFitness}
+
+def getWeeksAndStartDate(firstWorkoutTimestamp, currentDatestamp):
+  numberOfWeeksElapsed = 0
+  weekStartDatestamp = firstWorkoutTimestamp
+  while weekStartDatestamp < currentDatestamp:
+    numberOfWeeksElapsed += 1
+    weekStartDatestamp += (604800000 * numberOfWeeksElapsed)
+  return {'numberOfWeeksElapsed': numberOfWeeksElapsed, 'weekStartDatestamp': weekStartDatestamp}
+
+def getFartlekWorkout(fillerWorkout, tempoPace, goalPace):
+  jogTime = ''
+  jogDistance = ''
+  sprintDistance = itemgetter('sprintDistance')(fillerWorkout['workoutInfo'][0])
+  def getJogPace(jogPace):
+      y = 0
+      for x in jogPace:
+          if x == 'tempoPace':
+              y += tempoPace
+          else:
+              y += int(x)
+      return y
+  jogPace = getJogPace(fillerWorkout['workoutInfo'][0]['jogPace'])
+  if fillerWorkout['workoutInfo'][0]['jogByTime']:
+    jogTime = fillerWorkout['workoutInfo'][0]['jogByTime']
+    jogDistance = jogTime / jogPace
+  elif fillerWorkout['workoutInfo'][0]['jogByDistance']:
+    jogDistance = fillerWorkout['workoutInfo'][0]['jogByDistance']
+    jogTime = jogDistance * jogPace
+  def getSprintPace(sprintPace):
+      y = 0
+      for x in sprintPace:
+          if x == 'goalPace':
+              y += goalPace
+          else:
+              y += int(x)
+      return y
+  sprintPace = getSprintPace(fillerWorkout['workoutInfo'][0]['sprintPace'])
+  return { # pace in s/m, distance in m, time in s
+    'sprintDistance': sprintDistance, 'jogTime': jogTime, 'jogPace': jogPace, 'sprintPace': sprintPace, 'jogDistance': jogDistance}
+
+def getFartlekTrainingPlan(alpha, weekNumber, tempoPace, targetPace):
+  fartlek = list(Workout.objects.filter(id__contains='fartlek').values())
+  for workout in fartlek:
+    if alpha < float(workout['alpha']):
+      if weekNumber == float(workout['workoutInfo'][0]['weekAt']):
+        return {**getFartlekWorkout(workout, tempoPace, targetPace), 'sprintSets': workout['workoutInfo'][0]['sprintSets']}
+      if weekNumber > workout['workoutInfo'][0]['weekAt'] and workout['workoutInfo'][0]['end']:
+        if alpha < 0.8:
+          sprintSets = workout['workoutInfo'][0]['sprintSets'] + weekNumber - workout['workoutInfo'][0]['weekAt']
+          return {**getFartlekWorkout(workout, tempoPace, targetPace), 'sprintSets': sprintSets}
+        fartlekWorkout = getFartlekWorkout(workout, tempoPace, targetPace)
+        fartlekWorkout['sprintPace'] = fartlekWorkout['sprintPace'] - (weekNumber - workout['workoutInfo'][0].weekAt) * 0.00250
+        return {**fartlekWorkout, 'sprintSets': workout['workoutInfo'][0]['sprintSets']}
+
+def getNextDate(dateToCompare, previousWorkoutDate):
+  if (dateToCompare - sanitiseWeekDateStamp(previousWorkoutDate)) < 86400000:
+      return dateToCompare + 86400000
+  return dateToCompare
+
+def getSuggestedDate(userInfo, previousWorkout):
+  sanitisedCurrentDatestamp = sanitiseWeekDateStamp(time())
+  ipptDatestamp = itemgetter('ipptDatestamp')(userInfo)
+  # below for if close to IPPT date
+  if (sanitiseWeekDateStamp(ipptDatestamp) - sanitisedCurrentDatestamp) < (86400000 * 2):
+      return None
+  if 'long_distance' not in previousWorkout['type']:
+    firstWorkoutTimestamp = int('1622542227000')
+    currentDatestamp = time()
+    numberOfWeeksElapsed = itemgetter('numberOfWeeksElapsed')(getWeeksAndStartDate(firstWorkoutTimestamp, currentDatestamp))
+    nextWeekStart = sanitiseWeekDateStamp((604800000 * (numberOfWeeksElapsed + 1)) + firstWorkoutTimestamp)
+    return getNextDate(nextWeekStart, previousWorkout.date)
+  return getNextDate(sanitisedCurrentDatestamp, previousWorkout.date)
+
+def getLongDistanceTrainingPlan(alpha, weekNumber, tempoPace):
+  longDistance = list(Workout.objects.filter(id__contains='long_distance').values())
+  for workout in longDistance:
+    if alpha < float(workout['alpha']):
+      if weekNumber == float(workout['workoutInfo'][0]['weekAt']):
+        convertedTempoPace = tempoPace * 1000
+        return { # runTime in min, tempoPace in s/m, distance in km
+          'runTime': workout['workoutInfo'][0].runTime,
+          'tempoPace': tempoPace,
+          'distance': getRoundedDistance(workout['workoutInfo'][0]['runTime'], convertedTempoPace)
+        }
+      if weekNumber > workout['workoutInfo'][0]['weekAt'] and workout['workoutInfo'][0]['end']:
+        convertedTempoPace = tempoPace * 1000
+        tempoPaceNew = convertedTempoPace - (weekNumber - workout['workoutInfo'][0]['weekAt']) * 3
+        runTime = workout['workoutInfo'][0]['runTime']
+        distance = getRoundedDistance(runTime, tempoPaceNew)
+        return {'distance': distance, 'runTime': runTime, 'tempoPace': tempoPaceNew / 1000}
+
+def getOneOfThreeTrainingPlan(targetPace, cNewbieGains, userInfo, previousWorkout, displayPace, alpha):
+  firstWorkoutTimestamp = int('1622542227000')
+  workoutFrequency, ipptDatestamp = itemgetter('workoutFrequency', 'ipptDatestamp')(userInfo)
+  currentDatestamp = time()
+  userInfo['duration'] = 8 # todo Math.floor(ipptDatestamp - currentDatestamp)
+  previousWorkoutDatestamp = previousWorkout['date']
+  numberOfWeeksElapsed, weekStartDatestamp = itemgetter('numberOfWeeksElapsed', 'weekStartDatestamp')(getWeeksAndStartDate(firstWorkoutTimestamp, currentDatestamp))
+  weekStartDatestamp = sanitiseWeekDateStamp(weekStartDatestamp)
+  nextWeekStart = sanitiseWeekDateStamp((604800000 * (numberOfWeeksElapsed + 1)) + firstWorkoutTimestamp)
+  tempoPace = getPaces(targetPace, cNewbieGains)[0]
+  isPreviousWorkoutIntervalWorkout = 'primary' in previousWorkout['type'] or 'secondary' in previousWorkout['type'] or 'pyramid' in previousWorkout['type']
+  if (ipptDatestamp - currentDatestamp) < 604800000:
+    if isPreviousWorkoutIntervalWorkout:
+        return getLongDistanceTrainingPlan(alpha, numberOfWeeksElapsed, tempoPace)
+    return getFartlekTrainingPlan(alpha, numberOfWeeksElapsed, tempoPace, targetPace)
+  if workoutFrequency == 1 or not (len(previousWorkout) > 0):
+      return getIntervalTrainingPlan(targetPace, cNewbieGains, userInfo, previousWorkout, displayPace)
+  if workoutFrequency == 2:
+    if isPreviousWorkoutIntervalWorkout and previousWorkoutDatestamp > weekStartDatestamp and currentDatestamp < nextWeekStart:
+        return getLongDistanceTrainingPlan(alpha, numberOfWeeksElapsed, tempoPace)
+  if workoutFrequency == 3:
+    if previousWorkoutDatestamp > weekStartDatestamp and currentDatestamp < nextWeekStart:
+      if isPreviousWorkoutIntervalWorkout:
+          return getLongDistanceTrainingPlan(alpha, numberOfWeeksElapsed, tempoPace)
+      return getFartlekTrainingPlan(alpha, numberOfWeeksElapsed, tempoPace, targetPace)
+  return getIntervalTrainingPlan(targetPace, cNewbieGains, userInfo, previousWorkout, displayPace)
+
+def getTrainingPlan(questionnaireData, previousWorkout=None, previousFitness = 100):
+  if previousWorkout is None:
+      previousWorkout = {}
+  if (questionnaireData['regular']):
+      pass # TBC logic
+  userInfo = getUserInfo(questionnaireData, previousFitness)
+  alpha, beta, cNewbieGains = itemgetter('alpha', 'beta', 'cNewbieGains')(generateConstants(questionnaireData))
+  targetPace, displayPace = itemgetter('targetPace', 'displayPace')(getTargetPaces(userInfo.targetTime))
+  suggestedDate = getSuggestedDate(userInfo, previousWorkout)
+  newFitness, trainingPlan = itemgetter('newFitness', 'trainingPlan')(getOneOfThreeTrainingPlan(targetPace, cNewbieGains, userInfo, previousWorkout, displayPace, alpha))
+  return {'newFitness': newFitness, 'trainingPlan': trainingPlan, 'suggestedDate': suggestedDate}
 
 def get_training_plan():
     targetPace = itemgetter('targetPace')(getTargetPaces(720))
@@ -193,7 +328,7 @@ def get_training_plan():
     speedDifficulty = getSpeedDifficulty(11.076923076923077, 11.999999999999998, velocities)
     previousWorkout = {
             'difficultyMultiplier': 91,
-            'parts': [
+            'workoutInfo': [
                 {
                     'distance': 300,
                     'pace': 25000,
@@ -205,9 +340,7 @@ def get_training_plan():
                 },
             ],
             'personalisedDifficultyMultiplier': 160.0173922309409,
-            'segment': "primary",
-            'type': "Distance Interval",
-            'workout_ID': "1006"
+            'type': "primary"
         }
     return {
         '0.3': targetPace,
@@ -223,5 +356,5 @@ def get_training_plan():
         '75000': getGoalSetTime(previousWorkout),
         '105933.2': getAverageTime(previousWorkout),
         '{"newFitness": 100, "targetDifficulty": 101.92647071713169}': getOverallFitness(speedDifficulty, userInfo['duration'], userInfo['currentFitness'], previousWorkout),
-        '2': generateTrainingPlans(speedDifficulty, targetPace, userInfo, previousWorkout)
+        'primary-6, secondary-9': generateTrainingPlans(speedDifficulty, targetPace, userInfo, previousWorkout)
     }
