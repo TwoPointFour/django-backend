@@ -161,7 +161,7 @@ def getBestTrainingPlan(trainingPlanPrimary, trainingPlanSecondary):
 def getIntervalTrainingPlan(targetPace, cNewbieGains, userInfo, previousWorkout, displayPace):
   velocities = getVelocities(getPaces(targetPace, cNewbieGains))
    # velocities in km/hr, paces in s/m
-  speedDifficulty = getSpeedDifficulty(convertToVelocity(userInfo.currentTime), convertToVelocity(userInfo.targetTime), velocities) # getSpeedDifficulty(currentVelocity, paces);
+  speedDifficulty = getSpeedDifficulty(convertToVelocity(userInfo['currentTime']), convertToVelocity(userInfo['targetTime']), velocities) # getSpeedDifficulty(currentVelocity, paces);
   trainingPlanPrimary, trainingPlanSecondary, newFitness = itemgetter('trainingPlanPrimary', 'trainingPlanSecondary', 'newFitness')(generateTrainingPlans(speedDifficulty, targetPace, userInfo, previousWorkout))
   trainingPlan = trainingPlanSecondary[1] if getBestTrainingPlan(trainingPlanPrimary, trainingPlanSecondary) else trainingPlanPrimary[1]
   trainingPlan['workoutInfo'][0]["rest"] = getPrescribedRest(trainingPlan['workoutInfo'][0]["restMultiplier"], targetPace)
@@ -247,19 +247,22 @@ def getNextDate(dateToCompare, previousWorkoutDate):
       return dateToCompare + 86400000
   return dateToCompare
 
-def getSuggestedDate(userInfo, previousWorkout):
+def getSuggestedDate(userInfo, previousWorkout=None):
   sanitisedCurrentDatestamp = sanitiseWeekDateStamp(time())
   ipptDatestamp = itemgetter('ipptDatestamp')(userInfo)
   # below for if close to IPPT date
   if (sanitiseWeekDateStamp(ipptDatestamp) - sanitisedCurrentDatestamp) < (86400000 * 2):
       return None
-  if 'long_distance' not in previousWorkout['type']:
-    firstWorkoutTimestamp = int('1622542227000')
-    currentDatestamp = time()
-    numberOfWeeksElapsed = itemgetter('numberOfWeeksElapsed')(getWeeksAndStartDate(firstWorkoutTimestamp, currentDatestamp))
-    nextWeekStart = sanitiseWeekDateStamp((604800000 * (numberOfWeeksElapsed + 1)) + firstWorkoutTimestamp)
-    return getNextDate(nextWeekStart, previousWorkout.date)
-  return getNextDate(sanitisedCurrentDatestamp, previousWorkout.date)
+  if previousWorkout:
+      if 'long_distance' not in previousWorkout['type']:
+          firstWorkoutTimestamp = int('1622542227000')
+          currentDatestamp = time()
+          numberOfWeeksElapsed = itemgetter('numberOfWeeksElapsed')(
+              getWeeksAndStartDate(firstWorkoutTimestamp, currentDatestamp))
+          nextWeekStart = sanitiseWeekDateStamp((604800000 * (numberOfWeeksElapsed + 1)) + firstWorkoutTimestamp)
+          return getNextDate(nextWeekStart, previousWorkout['date'])
+  #     Test below
+  return getNextDate(sanitisedCurrentDatestamp, time())
 
 def getLongDistanceTrainingPlan(alpha, weekNumber, tempoPace):
   longDistance = list(Workout.objects.filter(id__contains='long_distance').values())
@@ -284,12 +287,12 @@ def getOneOfThreeTrainingPlan(targetPace, cNewbieGains, userInfo, previousWorkou
   workoutFrequency, ipptDatestamp = itemgetter('workoutFrequency', 'ipptDatestamp')(userInfo)
   currentDatestamp = time()
   userInfo['duration'] = 8 # todo Math.floor(ipptDatestamp - currentDatestamp)
-  previousWorkoutDatestamp = previousWorkout['date']
+  previousWorkoutDatestamp = previousWorkout['date'] if previousWorkout else ''
   numberOfWeeksElapsed, weekStartDatestamp = itemgetter('numberOfWeeksElapsed', 'weekStartDatestamp')(getWeeksAndStartDate(firstWorkoutTimestamp, currentDatestamp))
   weekStartDatestamp = sanitiseWeekDateStamp(weekStartDatestamp)
   nextWeekStart = sanitiseWeekDateStamp((604800000 * (numberOfWeeksElapsed + 1)) + firstWorkoutTimestamp)
   tempoPace = getPaces(targetPace, cNewbieGains)[0]
-  isPreviousWorkoutIntervalWorkout = 'primary' in previousWorkout['type'] or 'secondary' in previousWorkout['type'] or 'pyramid' in previousWorkout['type']
+  isPreviousWorkoutIntervalWorkout = ('primary' in previousWorkout['type'] or 'secondary' in previousWorkout['type'] or 'pyramid' in previousWorkout['type']) if previousWorkout else False
   if (ipptDatestamp - currentDatestamp) < 604800000:
     if isPreviousWorkoutIntervalWorkout:
         return getLongDistanceTrainingPlan(alpha, numberOfWeeksElapsed, tempoPace)
@@ -306,14 +309,15 @@ def getOneOfThreeTrainingPlan(targetPace, cNewbieGains, userInfo, previousWorkou
       return getFartlekTrainingPlan(alpha, numberOfWeeksElapsed, tempoPace, targetPace)
   return getIntervalTrainingPlan(targetPace, cNewbieGains, userInfo, previousWorkout, displayPace)
 
-def getTrainingPlan(questionnaireData, previousWorkout=None, previousFitness = 100):
+def getTrainingPlan(questionnaireData, previousWorkout=None, previousFitness=100):
   if previousWorkout is None:
       previousWorkout = {}
   if (questionnaireData['regular']):
       pass # TBC logic
   userInfo = getUserInfo(questionnaireData, previousFitness)
+  userInfo['ipptDatestamp'] = 1628513171000
   alpha, beta, cNewbieGains = itemgetter('alpha', 'beta', 'cNewbieGains')(generateConstants(questionnaireData))
-  targetPace, displayPace = itemgetter('targetPace', 'displayPace')(getTargetPaces(userInfo.targetTime))
+  targetPace, displayPace = itemgetter('targetPace', 'displayPace')(getTargetPaces(userInfo['targetTime']))
   suggestedDate = getSuggestedDate(userInfo, previousWorkout)
   newFitness, trainingPlan = itemgetter('newFitness', 'trainingPlan')(getOneOfThreeTrainingPlan(targetPace, cNewbieGains, userInfo, previousWorkout, displayPace, alpha))
   return {'newFitness': newFitness, 'trainingPlan': trainingPlan, 'suggestedDate': suggestedDate}
@@ -356,5 +360,14 @@ def get_training_plan():
         '75000': getGoalSetTime(previousWorkout),
         '105933.2': getAverageTime(previousWorkout),
         '{"newFitness": 100, "targetDifficulty": 101.92647071713169}': getOverallFitness(speedDifficulty, userInfo['duration'], userInfo['currentFitness'], previousWorkout),
-        'primary-6, secondary-9': generateTrainingPlans(speedDifficulty, targetPace, userInfo, previousWorkout)
+        'primary-6, secondary-9': generateTrainingPlans(speedDifficulty, targetPace, userInfo, previousWorkout),
+        'primary-6': getTrainingPlan(questionnaireData)
     }
+
+# describe('#getTrainingPlan', function() {
+#     it('Expected training plan if no previous workout', async function () {
+#         const workouts = await getWorkouts()
+#         const temp = (getTrainingPlan(questionnaireData, workouts, false, 100)).trainingPlan.parts[0].part_ID
+#         assert.strictEqual(temp, "1005_0")
+#     })
+# })
