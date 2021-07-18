@@ -2,20 +2,19 @@
 # from rest_framework.decorators import api_view
 # from django.shortcuts import render
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
-from django.http.response import Http404
 from .models import Profile, Questionnaire
 from .serializers import ProfileInitialSerializer, ProfileSerializer, UserSerializer, ProfileSerializerJSON, QuestionnaireSerializer, ProfileCreateSerializer
 from django.http import Http404
 from django.contrib.auth.models import User
 from rest_framework import serializers, status, generics
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated, BasePermission, SAFE_METHODS
 #
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
-from .suggest import get_training_plan
+from run.algorithms.suggest import get_training_plan
+from run.algorithms.predict import get_predicted_time
 
 # Create your views here.
 
@@ -219,6 +218,13 @@ class CustomAuthToken(ObtainAuthToken):
 class Suggest(generics.RetrieveAPIView):
     def get(self, request, **kwargs):
         var = get_training_plan()
+        return Response({
+            "Training Plan": var
+        })
+
+class Predict(generics.RetrieveAPIView):
+    def get(self, request, **kwargs):
+        var = get_predicted_time()
         return Response({
             "Training Plan": var
         })
