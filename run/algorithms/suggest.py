@@ -3,14 +3,14 @@ from functools import reduce
 from operator import itemgetter
 from statistics import pstdev
 from time import time
-from .models import Workout
+from run.models import Workout
+from run.algorithms.functions import getSpeedDifficulty
 
 # All constants below TBC
 rho = 7.0
 # tePace, ltPace, vPace, stPace
 phi = [1, 1, 1, 1]
 paceConstants = [1.243, 1.19, 1.057, 0.89]
-deltas = [0.41, 0.49, 0.55, 0.65, 0.73]
 kValue = 0.25
 yValue = 1.25
 def getPace(time):
@@ -81,55 +81,6 @@ def generateConstants(questionnaireData):
   cNewbieGains = (1 / rho) * math.exp(1 - alpha) + (rho - 1) / rho
   return {'alpha': alpha, 'beta': beta, 'cNewbieGains': cNewbieGains}
 
-def checkDiff(diffs, diff):
-    if diff in diffs:
-        return diffs[diff]
-    return 100
-
-def getDiffs(velocityToCompare, velocities, intermediateFunc, x = 1, differences=None):
-    if differences is None:
-        differences = {}
-    diffs = {}
-    teVelocity, ltVelocity, vVelocity, stVelocity = velocities
-    if (velocityToCompare < teVelocity):
-        diffs['teDiff'] = checkDiff(differences, "teDiff") + x * (deltas[0] * teVelocity * math.exp(teVelocity - velocityToCompare))
-    elif (velocityToCompare < ltVelocity):
-        diffs['teDiff'] = checkDiff(differences, "teDiff") - x * intermediateFunc(deltas[1], teVelocity, velocityToCompare)
-    elif (velocityToCompare < vVelocity):
-        diffs['ltDiff'] = checkDiff(differences, "ltDiff") - x * intermediateFunc(deltas[2], ltVelocity, velocityToCompare)
-    elif (velocityToCompare < stVelocity):
-        diffs['vDiff'] = checkDiff(differences, "vDiff") - x * intermediateFunc(deltas[3], vVelocity, velocityToCompare)
-    else:
-        diffs['stDiff'] = checkDiff(differences, "stDiff") -x * intermediateFunc(deltas[4], stVelocity, velocityToCompare)
-    return diffs
-
-def getSpeedDifficulty(currentVelocity, targetVelocity, velocities):
-    #todo why so many diffs. floating around? get rid of them
-    teVelocity, ltVelocity, vVelocity, stVelocity = velocities
-    def intermediateFunc(delta, velocityOne, velocityTwo):
-      return delta * velocityOne * math.exp(velocityTwo - velocityOne)
-    diffs = getDiffs(currentVelocity, velocities, intermediateFunc)
-    while (len(diffs) < 4):
-        if ('teDiff' in diffs and 'ltDiff' not in diffs):
-            diffs['ltDiff'] = diffs['teDiff'] + intermediateFunc(deltas[1], teVelocity, ltVelocity)
-        if ('ltDiff' in diffs and not ('teDiff' in diffs and 'vDiff' in diffs)):
-            if ('teDiff' not in diffs):
-                diffs['teDiff'] = diffs['ltDiff'] - intermediateFunc(deltas[1], teVelocity, ltVelocity)
-            if ('vDiff' not in diffs):
-                diffs['vDiff'] = diffs['ltDiff'] + intermediateFunc(deltas[2], ltVelocity, vVelocity)
-        if ('vDiff' in diffs and not ('ltDiff' in diffs and 'stDiff' in diffs)):
-            if ('ltDiff' not in diffs):
-                diffs['ltDiff'] = diffs['vDiff'] - intermediateFunc(deltas[2], ltVelocity, vVelocity)
-            if ('stDiff' not in diffs):
-                diffs['stDiff'] = diffs['vDiff'] + intermediateFunc(deltas[3], vVelocity, stVelocity)
-        if ('stDiff' in diffs and 'vDiff' not in diffs):
-            diffs['vDiff'] = diffs['stDiff'] - intermediateFunc(deltas[3], vVelocity, stVelocity)
-    finalDiffs = getDiffs(targetVelocity, velocities, intermediateFunc, -1, diffs)
-    finalDiffsKeys = [*finalDiffs]
-    if (len(finalDiffsKeys) == 1):
-        return finalDiffs[finalDiffsKeys[0]]
-    return 0
-
 def getWorkoutScore(previousWorkout):
   if not len(previousWorkout['workoutInfo'][0]["timings"]):
     return {'goalTimePerSet': 0, 'averageTime': 0, 'standardDeviation': 0, 'missed': 0, 'workoutScore': 0}
@@ -156,7 +107,7 @@ def getOverallFitness(speedDifficulty, duration, currentFitness, previousWorkout
 
 # todo edit this again
 def getBestTrainingPlan(trainingPlanPrimary, trainingPlanSecondary):
-  return trainingPlanPrimary[0] > trainingPlanSecondary[0] and trainingPlanPrimary[0] - trainingPlanSecondary[0] < 3 and trainingPlanPrimary[1]["personalisedDifficultyMultiplier"] < trainingPlanSecondary[1]["personalisedDifficultyMultiplier"]
+  return trainingPlanPrimary[0] > trainingPlanSecondary[0]# and trainingPlanPrimary[0] - trainingPlanSecondary[0] < 3 and trainingPlanPrimary[1]["personalisedDifficultyMultiplier"] < trainingPlanSecondary[1]["personalisedDifficultyMultiplier"]
 
 def getIntervalTrainingPlan(targetPace, cNewbieGains, userInfo, previousWorkout, displayPace):
   velocities = getVelocities(getPaces(targetPace, cNewbieGains))
@@ -363,11 +314,3 @@ def get_training_plan():
         'primary-6, secondary-9': generateTrainingPlans(speedDifficulty, targetPace, userInfo, previousWorkout),
         'primary-6': getTrainingPlan(questionnaireData)
     }
-
-# describe('#getTrainingPlan', function() {
-#     it('Expected training plan if no previous workout', async function () {
-#         const workouts = await getWorkouts()
-#         const temp = (getTrainingPlan(questionnaireData, workouts, false, 100)).trainingPlan.parts[0].part_ID
-#         assert.strictEqual(temp, "1005_0")
-#     })
-# })
