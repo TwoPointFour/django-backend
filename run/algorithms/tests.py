@@ -5,8 +5,7 @@ from operator import itemgetter
 
 
 class WorkoutTest(TestCase):
-    questionnaireData = {'frequency': 0, 'experience': 0, 'distance': 0, 'latest': "13:00", 'workoutFrequency': 3,
-                         'target': "12:00", 'duration': 8, 'regular': False}
+    questionnaireData = {'frequency': 0, 'experience': 0, 'distance': 0, 'latest': "13:00", 'workoutFrequency': 3, 'target': "12:00", 'duration': 8, 'regular': False}
     previousWorkout = {
         'difficultyMultiplier': 91,
         'workoutInfo': [
@@ -26,12 +25,12 @@ class WorkoutTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        cls.userInfo = suggest.getUserInfo(WorkoutTest.questionnaireData, 100)
-        cls.cNewbieGains = itemgetter('cNewbieGains')(suggest.generateConstants(WorkoutTest.questionnaireData))
-        cls.targetPace = itemgetter('targetPace')(suggest.getTargetPaces(cls.userInfo['targetTime']))
-        cls.velocities = suggest.getVelocities(suggest.getPaces(cls.targetPace, cls.cNewbieGains))
+        cls.userInfo = suggest.get_user_info(WorkoutTest.questionnaireData, 100)
+        cls.cNewbieGains = itemgetter('cNewbieGains')(suggest.generate_constants(WorkoutTest.questionnaireData))
+        cls.targetPace = itemgetter('targetPace')(suggest.get_target_paces(cls.userInfo['targetTime']))
+        cls.velocities = suggest.get_velocities(suggest.get_paces(cls.targetPace, cls.cNewbieGains))
         cls.speedDifficulty = suggest.getSpeedDifficulty(11.076923076923077, 11.999999999999998, cls.velocities)
-        cls.prescribedRest = suggest.getPrescribedRest(4.5, cls.targetPace)
+        cls.prescribedRest = suggest.get_prescribed_rest(4.5, cls.targetPace)
 
     def test_user_info(self):
         """
@@ -66,24 +65,24 @@ class WorkoutTest(TestCase):
         """"
         Everything related to workout scorer
         """
-        self.assertEqual(suggest.getMissed(WorkoutTest.previousWorkout), 3)
-        self.assertEqual(suggest.getWorkoutScore(WorkoutTest.previousWorkout)['workoutScore'], 37.985266824813856)
-        self.assertEqual(suggest.penaliseMissed(suggest.getMissed(WorkoutTest.previousWorkout), WorkoutTest.previousWorkout), 0.5687392682727516)
-        self.assertEqual(suggest.getStandardDeviation(WorkoutTest.previousWorkout), 50562.40161384742)
-        self.assertEqual(suggest.getGoalSetTime(WorkoutTest.previousWorkout), 75000)
-        self.assertEqual(suggest.getAverageTime(WorkoutTest.previousWorkout), 105933.2)
+        self.assertEqual(suggest.get_missed(WorkoutTest.previousWorkout), 3)
+        self.assertEqual(suggest.get_workout_score(WorkoutTest.previousWorkout)['workoutScore'], 37.985266824813856)
+        self.assertEqual(suggest.penalise_missed(suggest.get_missed(WorkoutTest.previousWorkout), WorkoutTest.previousWorkout), 0.5687392682727516)
+        self.assertEqual(suggest.get_standard_deviation(WorkoutTest.previousWorkout), 50562.40161384742)
+        self.assertEqual(suggest.get_goal_set_time(WorkoutTest.previousWorkout), 75000)
+        self.assertEqual(suggest.get_average_time(WorkoutTest.previousWorkout), 105933.2)
 
     def test_overall_fitness(self):
         """
         Overall fitness
         """
-        self.assertEqual(suggest.getOverallFitness(WorkoutTest.speedDifficulty, WorkoutTest.userInfo['duration'], WorkoutTest.userInfo['currentFitness'], WorkoutTest.previousWorkout), {"newFitness": 100, "targetDifficulty": 101.92647071713169})
+        self.assertEqual(suggest.get_overall_fitness(WorkoutTest.speedDifficulty, WorkoutTest.userInfo['duration'], WorkoutTest.userInfo['currentFitness'], WorkoutTest.previousWorkout), {"newFitness": 100, "targetDifficulty": 101.92647071713169})
 
     def test_interval_workouts(self):
         """
         Interval workouts
         """
-        pri_and_sec_workouts = suggest.generateTrainingPlans(WorkoutTest.speedDifficulty, WorkoutTest.targetPace, WorkoutTest.userInfo, WorkoutTest.previousWorkout)
+        pri_and_sec_workouts = suggest.generate_training_plans(WorkoutTest.speedDifficulty, WorkoutTest.targetPace, WorkoutTest.userInfo, WorkoutTest.previousWorkout)
         self.assertEqual(pri_and_sec_workouts['trainingPlanPrimary'][1]['id'], 'primary-6')
         self.assertEqual(pri_and_sec_workouts['trainingPlanSecondary'][1]['id'], 'secondary-9')
         self.assertEqual(suggest.getTrainingPlan(WorkoutTest.questionnaireData)['trainingPlan']['id'], 'primary-6')
