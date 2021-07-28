@@ -21,7 +21,7 @@ class ProfileLiteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ["profileImage", "user", ]
+        fields = ["id", "profileImage", "user", ]
 
 
 class ProfileInitialSerializer(serializers.ModelSerializer):
@@ -31,6 +31,8 @@ class ProfileInitialSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    profile = ProfileLiteSerializer(required=False)
+
     class Meta:
         model = User
         fields = "__all__"
@@ -91,13 +93,26 @@ class WorkoutSerializer(serializers.ModelSerializer):
 
 
 class WorkoutLogSerializer(serializers.ModelSerializer):
-    profile = ProfileLiteSerializer()
-    workouts = WorkoutSerializer(many=True)
-    comments = CommentSerializer(many=True)
+    profile_id = serializers.IntegerField(
+        write_only=True, required=False)
+    workout_id = serializers.IntegerField(
+        write_only=True, required=False)
+    # workouts = WorkoutSerializer(many=True)
+    comments = CommentSerializer(many=True, required=False)
 
     class Meta:
         model = WorkoutLog
         fields = "__all__"
+
+    def create(self, validated_data):
+        profile_id = validated_data.pop("profile_id")
+        workout_id = validated_data.pop("workout_id")
+        workout = Workout.objects.get(pk=workout_id)
+        profile = Profile.objects.get(pk=profile_id)
+        instance = WorkoutLog.objects.create(profile=profile, **validated_data)
+        instance.save()
+        instance.workouts.add(workout)
+        return instance
 
 
 # class UserSerializer(serializers.ModelSerializer):

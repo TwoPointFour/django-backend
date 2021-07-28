@@ -19,6 +19,8 @@ urlpatterns = [
     path("user/update/", views.UserUpdate.as_view()),
     path("profile/update/", views.ProfileUpdate.as_view()),
     path("questionnaire/create/", views.QuestionnaireCreate.as_view()),
+    path("workout/<str:pk>/", views.WorkoutView.as_view()),
+    path("workoutLog/create/", views.WorkoutLogCreate.as_view()),
     # path('login/', views.CustomAuthToken.as_view()),
     # path('signup/', views.SignUpUser.as_view()),
     # path('login/', authviews.obtain_auth_token),

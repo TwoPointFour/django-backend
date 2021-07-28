@@ -3,8 +3,8 @@
 # from django.shortcuts import render
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from django.http.response import Http404
-from .models import Profile, Questionnaire
-from .serializers import ProfileInitialSerializer, ProfileSerializer, UserSerializer, ProfileSerializerJSON, QuestionnaireSerializer, ProfileCreateSerializer
+from .models import Profile, Questionnaire, Workout, WorkoutLog
+from .serializers import WorkoutSerializer, ProfileSerializer, UserSerializer, ProfileSerializerJSON, QuestionnaireSerializer, ProfileCreateSerializer, WorkoutLogSerializer
 from django.http import Http404
 from django.contrib.auth.models import User
 from rest_framework import serializers, status, generics
@@ -160,6 +160,25 @@ class ProfileInitialize(APIView):
         profile = self.get_object(request)
         serializer = ProfileSerializer(profile, context={'request': request})
         return Response(serializer.data)
+
+
+class WorkoutView(generics.RetrieveAPIView):
+    queryset = Workout.objects.all()
+    serializer_class = WorkoutSerializer
+
+
+class WorkoutLogCreate(generics.CreateAPIView):
+    queryset = WorkoutLog.objects.all()
+    serializer_class = WorkoutLogSerializer
+    permission_classes = [IsAuthenticated]
+
+    # def post(self, request, format=None):
+    #     serializer = WorkoutLogSerializer(data=request.data, partial=True)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         return Response(serializer.data, status=status.HTTP_200_OK)
+    #     else:
+    #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # class SignUpUser(APIView):
