@@ -9,4 +9,8 @@ Setting up new local project:
 ```bash
 pip install -r requirements.txt
 ```
+Run tests for algorithm
+```bash
+python3 manage.py test run --keepdb
+```
 

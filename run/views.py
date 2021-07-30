@@ -1,6 +1,6 @@
 # from django.views.decorators.csrf import csrf_exempt
 # from rest_framework.decorators import api_view
-# from django.shortcuts import render
+from django.shortcuts import render
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from .models import Profile, Questionnaire
 from .serializers import ProfileInitialSerializer, ProfileSerializer, UserSerializer, ProfileSerializerJSON, QuestionnaireSerializer, ProfileCreateSerializer
@@ -14,7 +14,7 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from run.algorithms.suggest import get_training_plan
-from run.algorithms.predict import get_predicted_time
+from run.algorithms.suggest import get_predicted_time
 
 # Create your views here.
 
@@ -229,7 +229,24 @@ class Predict(generics.RetrieveAPIView):
             "Training Plan": var
         })
 
+from .forms import TestAlgorithm
 
+def test_algorithm(request):
+    if request.method == 'POST':
+        pass
+        # form = TestAlgorithm(request.POST)
+        # return Response({
+        #         "Training Plan": 'var'
+        # })
+    else:
+        # proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
+        form = TestAlgorithm(initial={})
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'test.html', context)
 
 # # @csrf_exempt
 # class UserDetail(APIView):
