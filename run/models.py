@@ -54,8 +54,12 @@ class Questionnaire(models.Model):
 
 class Workout(models.Model):
     workoutInfo = models.JSONField(blank=True, null=True, default=dict)
-    id = models.CharField(primary_key=True, max_length=50)
+    id = models.CharField(primary_key=True, max_length=50, blank=True)
+    type = models.CharField(blank=True, max_length=50)
+    measurement = models.CharField(blank=True, max_length=50)
     alpha = models.FloatField(null=True, blank=True)
+    week = models.IntegerField(null=True)
+    global_score = models.FloatField(null=True)
     difficultyMultiplier = models.FloatField(null=True, blank=True)
 
     def __str__(self):
@@ -86,7 +90,10 @@ class Profile(models.Model):
 class WorkoutLog(models.Model):
     workouts = models.ManyToManyField(
         Workout, blank=True, related_name="workoutlogs")
-    timings = models.JSONField(blank=True)
+    timings = models.JSONField(blank=True, null=True)
+    run_distance = models.JSONField(blank=True, null=True)
+    rest_distance = models.JSONField(blank=True, null=True)
+    gps_data = models.JSONField(blank=True, null=True)
     datetime = models.DateTimeField(auto_now=True)
     profile = models.ForeignKey(
         Profile, on_delete=models.CASCADE, related_name="workoutlogs", related_query_name="workoutlogs", null=True)
