@@ -29,7 +29,7 @@ class WorkoutTest(TestCase):
         cls.cNewbieGains = itemgetter('cNewbieGains')(suggest.generate_constants(WorkoutTest.questionnaireData))
         cls.targetPace = itemgetter('targetPace')(suggest.get_target_paces(cls.userInfo['targetTime']))
         cls.velocities = suggest.get_velocities(suggest.get_paces(cls.targetPace, cls.cNewbieGains))
-        cls.speedDifficulty = suggest.getSpeedDifficulty(11.076923076923077, 11.999999999999998, cls.velocities)
+        cls.speedDifficulty = suggest.get_speed_difficulty(11.076923076923077, 11.999999999999998, cls.velocities)
         cls.prescribedRest = suggest.get_prescribed_rest(4.5, cls.targetPace)
 
     def test_user_info(self):
@@ -85,4 +85,10 @@ class WorkoutTest(TestCase):
         pri_and_sec_workouts = suggest.generate_training_plans(WorkoutTest.speedDifficulty, WorkoutTest.targetPace, WorkoutTest.userInfo, WorkoutTest.previousWorkout)
         self.assertEqual(pri_and_sec_workouts['trainingPlanPrimary'][1]['id'], 'primary-6')
         self.assertEqual(pri_and_sec_workouts['trainingPlanSecondary'][1]['id'], 'secondary-9')
-        self.assertEqual(suggest.getTrainingPlan(WorkoutTest.questionnaireData)['trainingPlan']['id'], 'primary-6')
+        self.assertEqual(suggest.get_training_plan(WorkoutTest.questionnaireData)['trainingPlan']['id'], 'primary-6')
+
+    def test_predicted_time(self):
+        """
+        Predicted time
+        """
+        self.assertEqual(suggest.get_predicted_time(WorkoutTest.questionnaireData, 115.4117657370535)['predicted_time'], 12.0)
