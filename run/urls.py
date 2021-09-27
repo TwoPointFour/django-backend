@@ -9,6 +9,9 @@ from rest_framework_simplejwt.views import (
 
 
 urlpatterns = [
+    path("test/", views.test_algorithm),
+    path("predict/", views.Predict().as_view()),
+    path("suggest/", views.Suggest().as_view()),
     path("profiles/", views.ProfileList.as_view()),
     path("profile/new/", views.ProfileCreate.as_view()),
     path("profile/create/", views.UserProfileCreate.as_view()),

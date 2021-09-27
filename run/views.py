@@ -1,6 +1,6 @@
 # from django.views.decorators.csrf import csrf_exempt
 # from rest_framework.decorators import api_view
-# from django.shortcuts import render
+from django.shortcuts import render
 from rest_framework.parsers import FormParser, JSONParser, MultiPartParser
 from django.http.response import Http404
 from .models import Profile, Questionnaire, Workout, WorkoutLog
@@ -9,12 +9,13 @@ from django.http import Http404
 from django.contrib.auth.models import User
 from rest_framework import serializers, status, generics
 from rest_framework.views import APIView
-from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated, BasePermission, SAFE_METHODS
 #
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from run.algorithms.suggest import get_training_plan
+from run.algorithms.suggest import get_predicted_time
 
 # Create your views here.
 
@@ -234,6 +235,38 @@ class CustomAuthToken(ObtainAuthToken):
             'email': user.email
         })
 
+class Suggest(generics.RetrieveAPIView):
+    def get(self, request, **kwargs):
+        var = get_training_plan()
+        return Response({
+            "Training Plan": var
+        })
+
+class Predict(generics.RetrieveAPIView):
+    def get(self, request, **kwargs):
+        var = get_predicted_time()
+        return Response({
+            "Training Plan": var
+        })
+
+from .forms import TestAlgorithm
+
+def test_algorithm(request):
+    if request.method == 'POST':
+        pass
+        # form = TestAlgorithm(request.POST)
+        # return Response({
+        #         "Training Plan": 'var'
+        # })
+    else:
+        # proposed_renewal_date = datetime.date.today() + datetime.timedelta(weeks=3)
+        form = TestAlgorithm(initial={})
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'test.html', context)
 
 # # @csrf_exempt
 # class UserDetail(APIView):

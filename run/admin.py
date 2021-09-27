@@ -22,7 +22,7 @@ class WorkoutLogCommentInline(admin.TabularInline):
 
 
 class WorkoutAdmin(admin.ModelAdmin):
-    list_display = ("id", "type", "measurement",
+    list_display = ("id", "alpha", "type", "measurement",
                     "difficultyMultiplier", "workoutInfo")
 
 
